@@ -1,0 +1,18 @@
+{
+    "ids": [
+        "resume"
+    ],
+    "embeddings": null,
+    "documents": [
+        "Esteban Barrios \n2651 Vista Verde Dr | San Jose, California, 95148| ebarriosc1@gmail.com | (408) 219-3523 \nVersaFle in harnessing data through sophisFcated analysis and automaFon techniques, commiLed to \nuncovering crucial insights and streamlining tasks across diverse industries. \nHighLights: Project Management, SoluFons Architect, GIS, GCP , Linux, Apache2, GitHub, Flask, \nLanguages: Python, SQL, PowerShell, VisualBasic, HTML \nGoogle Cloud Stack: BigQuery, CloudSQL, APIs, IntegraFon Connector \nDatabases: MySQL, SQL Server \nMachine Learning: Keras, TensorFlow, SciKit, LinearRegression, Neural Networks \nEXPERIENCE \nAlum Rock Union School District,   San Jose, California          October 2023 - Present \nData Analyst \n\u2022 Engineered a 99% workload reducFon by designing and implemenFng with Python, PowerShell, and SQL, \nan automated account creaFon process for sta\ufb00 and students across Google Workspace, Microsog AcFve \nDirectory, SmartFind, VectorSoluFons, eSchoolPlus, and ParentSquare, reducing the manual e\ufb00ort from 8 \nhours to 5 minutes.  \n\u2022 Microsog AcFve Directory NoF\ufb01caFon Script implemented to inform IT Admins of any breaches as well as \ninforming Sta\ufb00 that their passwords will expire.  \n\u2022 Spearheaded the design of a Dashboard applicaFon designed with Python, Html5, CSS, JavaScript, and \nChartJS for real-Fme IT operaFons monitoring.  \n\u2022 InsFtuted documentaFon and GitHub versioning procedures within the department to streamline \nprocesses and improve work\ufb02ow.  \nArturo.ai,   Remote                                                        August 2021 \u2013 July 2023 \nData Quality Analyst \n\u2022 Accountable for the creaFon and maintenance of high-quality datasets for deep learning projects \nsigni\ufb01cantly enhancing data reliability. \n\u2022 Achieved a 90% in workload reducFon by developing a Python CLI automaFng recurring processes within \nLabelBox api. \n\u2022 Pioneered a custom GUI using KivyMD to facilitate MySQL server management, streamlining data \nextracFon and automaFon. \n\u2022 The DQ Team played a pivotal role in establishing a robust labeling review process by creaFng \ncomprehensive documentaFon outlining the best pracFces.  \nSJSU Tower FoundaFon,   San Jose, California                September 2018 - May 2020 \nResearch Associate  \n\u2022 ResponsibiliFes encompass gathering and summarizing evidence to support senior research sta\ufb00 in \nscienF\ufb01c \ufb01elds. Focused on implemenFng innovaFve techniques within the established study protocol. \nKey achievements include: formulaFng a Python-based Hubbard Model for Fermion spin structure \nanalysis, uFlizing TensorFlow to enhance mulF-layered CNN models for galaxy geometry classi\ufb01caFon with \nthe team, creaFng an ETL pipeline to train model on diverse data, and developing an E-Field simulaFon \nmodel with TSNE and PCA for electron classi\ufb01caFon in arbitrary E-Fields.  \nEDUCATION \nSan Jose State University  San Jose, California                        BS Physics\nReferences are available upon request."
+    ],
+    "uris": null,
+    "data": null,
+    "metadatas": [
+        null
+    ],
+    "included": [
+        "documents",
+        "metadatas"
+    ]
+}
