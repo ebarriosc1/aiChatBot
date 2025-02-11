@@ -1,0 +1,202 @@
+#background {
+    position: absolute; /* Cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('assets/TapestryofBlazingStarbirthNebula.jpg'); /* Local image path */
+    background-size: cover; /* Ensure the image covers the entire area */
+    background-position: center center; /* Center the image */
+    filter: brightness(.8); /* Adjust brightness */
+    z-index: 3; /* Ensure it stays behind other elements */
+    transform: scaleX(-1); /* Flip the image horizontally */
+    transform-origin: center; /* Flip from the center */
+}
+
+.large-header {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; 
+    background-size: cover; 
+    background-position: center center; 
+    z-index: 4;
+}
+
+
+#blob {
+    position: relative;
+	z-index: 3;
+    canvas {
+        width: 1000px;
+        margin-top: -7%;
+        @media(max-width: 1200px) {
+            margin-top: -10%;
+            width: 800px
+        }
+        @media(max-width: 600px) {
+            width: 800px
+        }
+    }
+}
+
+.rangeSlider {
+    position: relative;
+    background: none;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    &.rangeSlider__horizontal {
+        height: 10px;
+        width: 160px;
+    }
+    .rangeSlider__fill {
+        border-radius: 7px;
+        background: #fff;
+        position: absolute;
+        &:before {
+            content: '';
+            left: -2px;
+            top: -2px;
+            bottom: -2px;
+            right: -2px;
+            border: 2px solid #3F4656;
+            border-radius: 6px;
+            position: absolute;
+        }
+    }
+    .rangeSlider__fill__horizontal {
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+    .rangeSlider__handle {
+        border: 2px solid #3F4656;
+        cursor: grab;
+        cursor: -moz-grab;
+        cursor: -webkit-grab;
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+    }
+    .rangeSlider__handle__horizontal {
+        top: -7px;
+    }
+}
+
+html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+* {
+    box-sizing: inherit;
+    &:before,
+    &:after {
+        box-sizing: inherit;
+    }
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+/* // Center & dribbble */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Source Sans Pro', Arial;
+    background: #1c1f29;
+    .dribbble {
+        position: fixed;
+        display: block;
+        right: 20px;
+        bottom: 20px;
+        img {
+            display: block;
+            height: 28px;
+        }
+    }
+}
+
+
+/* Chatbox styling */
+.chat-box {
+    position: absolute;
+    bottom: 15%; /* Adjusted to make space for input field */
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 20vh;
+    width: 80%;
+    overflow-y: auto;
+    padding: 10px;
+    z-index: 4;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+    max-width: 80%;
+    background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+    backdrop-filter: blur(3px); /* Adds blur effect behind the message */
+}
+
+.bot {
+    background-color: rgba(0, 0, 0, 0.4); /* Transparent bot messages */
+    color: white;
+    align-self: flex-start;
+}
+
+.user {
+    background-color: rgba(76, 175, 80, 0.4); /* Transparent user messages */
+    color: white;
+    align-self: flex-end;
+}
+
+/* Transparent Text Box */
+.input-container {
+    position: absolute;
+    bottom: 5%; /* Positioned above the chatbox */
+    left: 50%;
+    transform: translateX(-135%);
+    width: 30%; /* Full width of the input */
+	z-index: 4;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0); /* Light border */
+    border-radius: 5px;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0); /* Transparent background */
+    color: white;  /* White text color */
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0); /* Soft shadow for depth */
+    backdrop-filter: blur(5px); /* Subtle blur for the text box background */
+}
+
+input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Light placeholder text */
+}
+
+
+@media only screen and (max-width: 480px) {
+    input[type="text"], button {
+        padding: 8px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
