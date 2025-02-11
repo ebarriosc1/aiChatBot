@@ -240,7 +240,7 @@ animateProcessingEffect();
 // Embedding and context handling
 async function loadEmbeddings() {
     try {
-        const response = await fetch('/repo-name/assets/embeddings_nomic.json');
+        const response = await fetch('/aiChatBot/assets/embeddings_nomic.json');
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
