@@ -1,5 +1,5 @@
-const OLLAMA_GENERATE_API_URL = 'http://localhost:11434/api/generate';
-const OLLAMA_EMBED_API_URL = 'http://localhost:11434/api/embeddings';
+const OLLAMA_GENERATE_API_URL = '"https://ollama.up.railway.app/api/generate"';
+const OLLAMA_EMBED_API_URL = "https://ollama.up.railway.app/api/embeddings";
 
 
 // const DEFAULT_MODEL = 'deepseek-r1:1.5b'; 
