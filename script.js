@@ -1,4 +1,4 @@
-const OLLAMA_GENERATE_API_URL = '"https://ollama.up.railway.app/api/generate"';
+const OLLAMA_GENERATE_API_URL = "https://ollama.up.railway.app/api/generate";
 const OLLAMA_EMBED_API_URL = "https://ollama.up.railway.app/api/embeddings";
 
 
