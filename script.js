@@ -1,6 +1,5 @@
-const OLLAMA_GENERATE_API_URL = "https://ollama.up.railway.app/api/generate";
-const OLLAMA_EMBED_API_URL = "https://ollama.up.railway.app/api/embeddings";
-
+const apiKey = 'AIzaSyCZ4Musbk12ZwtJlg7w-KJHJy9oW2Dt3_c';  
+const GEMINI_GENERATE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
 // const DEFAULT_MODEL = 'deepseek-r1:1.5b'; 
 // const DEFAULT_MODEL = 'llama3.2:1b'
@@ -10,7 +9,7 @@ const DEFAULT_MODEL = 'llama3.1:8b' //This model is also performing really well 
 
 
 // const { ChromaClient } = require('chromadb');
-// const chromaClient = new ChromaClient({ path: '/assets/chroma_db/' }); // Replace with the path 
+// const chromaClient = new ChromaClient({ path: '/assets/chroma_db/' }); // Replace with the path
 let conversationHistory = [];
 const MAX_HISTORY_LENGTH = 5;
 let buffer = '';
@@ -119,7 +118,7 @@ function sendMessage() {
 
     // Increase targetProcessing for faster animation during message processing
     animateProcessingEffect(2.5); // Increased from 1.8 to 2.5 for faster animation
-    fetchOllamaResponse(userInput);
+    fetchGeminiResponse(userInput);
 }
 
 let animationFrameId = null;
@@ -138,14 +137,6 @@ let intervalID;
 const maxSamples = 60; // Number of FPS samples to keep
 const samples = ['fps']; // Array to store FPS samples
 
-// Initialize FPS graph (using C3.js)
-const graph = c3.generate({
-    bindto: "#graph",
-    size: { height: 200 },
-    data: { columns: [samples], type: 'spline' },
-    axis: { y: { min: 0 }, x: { show: false } },
-    transition: { duration: 0 }
-});
 
 // Start FPS monitoring
 function startFpsMonitoring(fps, sampleFreq) {
@@ -239,16 +230,8 @@ animateProcessingEffect();
 
 // Embedding and context handling
 async function loadEmbeddings() {
-    try {
-        const response = await fetch('/aiChatBot/assets/embeddings_nomic.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-    }
+    const response = await fetch('/assets/embeddings_nomic.json');
+    return await response.json();
 }
 
 function cosineSimilarity(vecA, vecB) {
@@ -318,7 +301,7 @@ async function findRelevantChunks(input, topK = 3) {
 
 // Main response functionz
 // Main response function
-async function fetchOllamaResponse(input) {
+async function fetchGeminiResponse(input) {
     const botMessage = document.createElement("div");
     botMessage.classList.add("message", "bot");
     document.getElementById("chat-box").appendChild(botMessage);
@@ -328,10 +311,10 @@ async function fetchOllamaResponse(input) {
         conversationHistory.push({ role: "user", content: input });
         if (conversationHistory.length > MAX_HISTORY_LENGTH) {
             conversationHistory.shift();
-        }
+        }  
 
-        // Load the entire resume context
-        const resumeContext = await loadEmbeddings();
+        //Load resume context
+        const resumeContext = await loadEmbeddings()
 
         // Build conversation history context
         const historyContext = conversationHistory
@@ -339,8 +322,7 @@ async function fetchOllamaResponse(input) {
             .join('\n');
 
         // Build prompt
-        const prompt = `
-            You are Esteban Barrios' career assistant. Follow these rules:
+        const prompt = `You are Esteban Barrios' career assistant. Follow these rules:
             1. For resume-specific questions (skills, experience, education), use ONLY this context:
             ${resumeContext.documents}
             
@@ -355,76 +337,47 @@ async function fetchOllamaResponse(input) {
             
             CURRENT QUESTION: ${input}
             
-            ANSWER:
-        `;
+            ANSWER:`
+        ;
+        console.log("Prompt sent to Gemini:", prompt);
 
-        console.log(prompt)
-
-        // Generate response
-        const response = await fetch(OLLAMA_GENERATE_API_URL, {
+        // Send request to Gemini API
+        const response = await fetch(GEMINI_GENERATE_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: DEFAULT_MODEL,
-                prompt: prompt.trim(),
-                stream: true,
+                contents: [{ 
+                    parts: [{ text: prompt.trim() }] 
+                }]
             }),
         });
 
+        // Handle non-OK response (e.g., invalid API key, quota exceeded)
         if (!response.ok) {
-            throw new Error(`Failed to generate response: ${response.statusText}`);
+            const errorText = await response.text();
+            throw new Error(`API request failed: ${response.status} - ${errorText}`);
         }
 
-        // Process streaming response
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let fullResponse = '';
+        // Parse JSON response
+        const data = await response.json();
+        console.log("Gemini API Response:", data);
 
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
+        // Extract response text safely
+        let fullResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate a response.";
 
-            const chunk = decoder.decode(value);
-            try {
-                const jsonResponse = JSON.parse(chunk);
-
-                if (jsonResponse.response) {
-                    buffer += jsonResponse.response;
-
-                    // Remove <thinking> tags
-                    while (true) {
-                        if (!inThinkingBlock) {
-                            const startIdx = buffer.indexOf('<thinking>');
-                            if (startIdx === -1) break;
-                            buffer = buffer.slice(0, startIdx) + buffer.slice(startIdx + '<thinking>'.length);
-                            inThinkingBlock = true;
-                        } else {
-                            const endIdx = buffer.indexOf('</thinking>');
-                            if (endIdx === -1) break;
-                            buffer = buffer.slice(0, endIdx) + buffer.slice(endIdx + '</thinking>'.length);
-                            inThinkingBlock = false;
-                        }
-                    }
-
-                    const cleanChunk = buffer.replace(/<\/?thinking>/gi, '');
-                    buffer = buffer.slice(cleanChunk.length);
-
-                    fullResponse += cleanChunk;
-                    botMessage.textContent = fullResponse.trim();
-                    document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-                }
-            } catch (error) {
-                console.error('Error parsing streaming response:', error);
-            }
-        }
+        // Display response
+        botMessage.textContent = fullResponse.trim();
+        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
 
         // Add bot response to history
         conversationHistory.push({ role: "assistant", content: fullResponse });
 
     } catch (error) {
+        console.error("Error fetching response from Gemini API:", error);
         botMessage.textContent = "Error: " + error.message;
     }
 }
+
 
 // Validation function
 function validateResponse(response) {
