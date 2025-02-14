@@ -1,4 +1,4 @@
-const apiKey = <key>;  
+const apiKey = ${{GEMINI_API_KEY}};  
 const GEMINI_GENERATE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
 // const DEFAULT_MODEL = 'deepseek-r1:1.5b'; 
