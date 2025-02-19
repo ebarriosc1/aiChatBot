@@ -1,31 +1,21 @@
-name: Deploy to GitHub Pages
+name: UPDATE_APP_ACTION
 
 on:
   push:
     branches:
       - main
-
 jobs:
-  build:
+  update-readme-with-appinfo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Create .env File
-        run: echo "VITE_API_KEY=${{ secrets.API_KEY }}" > .env
-
-      - name: Install Dependencies
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: setup node
+        uses: actions/setup-node@v1
+      - name: Install dependencies
         run: npm install
-
-      - name: Build Project
-        run: npm run build
+      - name: Generate README file
+        run: node index.js
         env:
-          VITE_API_KEY: ${{ secrets.API_KEY }}
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.0
-        with:
-          branch: gh-pages
-          folder: dist
+          MY_API_KEY: ${{secrets.MY_API_KEY}}
