@@ -9,16 +9,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v1
-      - name: setup node
+      - name: Checkout repository
+        uses: actions/checkout@v3  # ✅ Use latest checkout version
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+
       - name: Install dependencies
         run: npm install
+
       - name: Debug Environment Variables
         run: env
+
       - name: Generate README file
-        run: env
-          MY_API_KEY: ${{secrets.MY_API_KEY}}
+        run: echo "Running README generation script..."
+        env:
+          MY_API_KEY: ${{ secrets.MY_API_KEY }}
