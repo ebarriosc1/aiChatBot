@@ -1,0 +1,10 @@
+{
+  "name": "aiChatbotAPP",
+  "version": "1.0.0",
+  "description": "A chatbot powerered with gemini api",
+  "main": "script.js",
+  "scripts": {
+    "start": "node script.js"
+  },
+  "dependencies": {}
+}
