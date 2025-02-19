@@ -1,0 +1,20 @@
+name: Deploy Javascript app
+
+on: [push]
+
+jobs: 
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set Environment Variable
+        run: echo "GEMINI_APP_API_KEY=${{secrets.GEMINI_API_KEY}}" >> $GITHUB_ENV
+
+      - name: Build and Deploy
+        run: npm install && npm run build 
+        env: 
+          GEMINI_APP_API_KEY: ${{secrets.GEMINI_API_KEY}}
+          
