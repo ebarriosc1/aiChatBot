@@ -20,5 +20,5 @@ jobs:
       - name: Debug Environment Variables
         run: env
       - name: Generate README file
-        env:
+        run: env
           MY_API_KEY: ${{secrets.MY_API_KEY}}
