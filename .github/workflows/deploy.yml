@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - main
+
 jobs:
   update-readme-with-appinfo:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # ✅ Use latest checkout version
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -20,10 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Inject API Key into JavaScript
+        run: echo "const apiKey = '${{ secrets.MY_API_KEY }}';" > public/config.js
+
       - name: Debug Environment Variables
         run: env
 
-      - name: Generate README file
-        run: echo "Running README generation script..."
-        env:
-          MY_API_KEY: ${{ secrets.MY_API_KEY }}
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: public
