@@ -346,12 +346,20 @@ async function fetchGeminiResponse(input) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ 
-                    parts: [{ text: prompt.trim() }] 
-                }]
+                contents: [{ parts: [{ text: prompt.trim() }] }]
             }),
         });
-
+        
+        const responseText = await response.text(); // Log the raw response
+        console.log("Raw API Response:", responseText);
+        
+        try {
+            const data = JSON.parse(responseText);
+            console.log("Parsed JSON Response:", data);
+        } catch (error) {
+            console.error("Response is not valid JSON. Full Response:", responseText);
+            throw new Error("Unexpected API response format.");
+        }
         // Handle non-OK response (e.g., invalid API key, quota exceeded)
         if (!response.ok) {
             const errorText = await response.text();
