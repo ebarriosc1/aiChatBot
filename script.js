@@ -1,5 +1,5 @@
 const apiKey = 'AIzaSyB-UQhFMDDo-1AzWY7JapnC4pYIyZIYd-0';
-const GEMINI_GENERATE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+const GEMINI_GENERATE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
 // const DEFAULT_MODEL = 'deepseek-r1:1.5b'; 
 // const DEFAULT_MODEL = 'llama3.2:1b'
