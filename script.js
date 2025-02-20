@@ -230,7 +230,7 @@ animateProcessingEffect();
 
 // Embedding and context handling
 async function loadEmbeddings() {
-    const response = await fetch('/assets/embeddings_nomic.json');
+    const response = await fetch('aiChatBot/assets/embeddings_nomic.json');
     return await response.json();
 }
 
